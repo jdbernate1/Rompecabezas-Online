@@ -1,6 +1,9 @@
 /*Código armado por La Foca Loca S.A. No modificar*/
+* {
+  box-sizing: border-box;
+}
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Roboto', sans-serif;
   width: 940px;
   margin: 5% auto;
   min-height: 100%;
@@ -19,9 +22,20 @@ li::before {
   color: #EC6778;
 }
 
-.col-40 h1 {
+.col-40 h2 {
   font-size: 20px;
   color: #E84A5F;
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 15px;
+}
+
+.col-40 h4 {
+  font-size: 18px;
+  color: #E84A5F;
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 15px;
 }
 
 .col-40, .col-60 {
@@ -30,22 +44,34 @@ li::before {
   vertical-align: top;
 }
 .col-40 {
-  background: #FFF;
+  background: #f6f6f6;
   padding: 30px;
   color: #000;
+  width: 40%;
+  height: 600px;
 }
 
 .col-60 {
-  background: #E84A5F;
+  background: #f6f6f6;
+  width: 60%;
 
 }
 
 #flecha{
-  font-size: 60px;
+  font-size: 40px;
+}
+
+#ultimo_mov {
+  margin-top: 5%;
 }
 
 .texto-centrado {
   text-align: center;
+}
+
+#juego {
+  width: 600px;
+  height: 600px;
 }
 
 #juego div {
@@ -56,4 +82,77 @@ li::before {
 @keyframes fadein {
   from { opacity: 0; }
   to   { opacity: 1; }
+}
+
+#objetivo img {
+  width: 60%;
+  height:60%;
+}
+.piezas {
+  float: left;
+  width: 33.3333333%;
+  height: 33.3333333333%;
+  margin: 0;
+  padding: 0;
+}
+.piezas img{
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.col-40 .botones {
+  margin-left: 25%;
+  margin-right: 25%;
+  margin-top: 5%;
+}
+
+#jugardenuevo {
+  border-left-color: rgb(48, 133, 214);
+  border-right-color: rgb(48, 133, 214);
+  outline: 0;
+  box-shadow: 0 0 0 2px #fff,0 0 0 4px rgba(50,100,150,.4);
+  border: 0;
+  border-radius: .25em;
+  background-color: #3085d6;
+  color: #fff;
+  font-size: 1.0625em;
+  cursor: pointer;
+  font-weight: 500;
+  font-family: inherit;
+}
+
+body section {
+  border: solid 1px white;
+  box-shadow: rgba(0, 0, 0, 0.12) 10px 10px 0px 0px;
+
+}
+
+
+#footer {
+  color: #E84A5F;
+  font-size: 18px;
+  background-color: white;
+}
+
+#footer h4 {
+  margin-top: 1%;
+  margin-bottom: 1%;
+}
+.otros {
+  height: 100%
+  display: flex;
+  justify-content: initial;
+  margin: 0 0 2% 0;
+
+
+}
+
+
+#otrosjuegos img {
+  width: 10%;
+  margin-left: 3%;
+  margin-right:3%;
+
 }

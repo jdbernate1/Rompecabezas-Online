@@ -1,11 +1,38 @@
 // Arreglo que contiene las intrucciones del juego 
-var instrucciones = [];
+var instrucciones = ["Identificar la imagen objetivo","Mover las piezas para lograr igualar el rompecabezas con el objetivo","Verificar que el rompecabezas sea igual al objetivo"];
 // Arreglo para ir guardando los movimientos que se vayan realizando
 var movimientos = [];
 
+var boton = document.getElementById('jugardenuevo');
+
+boton.style.display = "none";
+
+var victoria = false;
+
+//var otrosJuegos= ["images/final.png","images/final0.jpg","images/final000.jpg"]
+
+var otrosJuegos = {
+  "images/final.png":"juego.html" ,
+  "images/final0.jpg": "juego1.html",
+  "images/finalMyR.jpg": "juego.html",
+  "images/finalMyR2.jpg": "juego.html",
+  "images/finalGUM.jpg": "juego.html",
+  "images/finalSU.jpg": "juego.html",
+}
+
+var juegoActual= document.getElementById('Actual').getAttribute('src');
+
+var imgPiezas = document.getElementsByClassName("piezas")
+
+//boton.style = 
 // Representación de la grilla. Cada número representa a una pieza.
 // El 9 es la posición vacía
 var grilla = [
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9]
+];
+var ganar = [
     [1, 2, 3],
     [4, 5, 6],
     [7, 8, 9]
@@ -16,27 +43,63 @@ Esta posición comienza siendo la [2, 2]*/
 var filaVacia = 2;
 var columnaVacia = 2;
 
+
+function reiniciar(){
+  mezclarPiezas(30);
+  capturarTeclas();
+  boton.style.display="none";
+  victoria=false;
+}
+
+
 /* Esta función deberá recorrer el arreglo de instrucciones pasado por parámetro. 
 Cada elemento de este arreglo deberá ser mostrado en la lista con id 'lista-instrucciones'. 
 Para eso deberás usar la función ya implementada mostrarInstruccionEnLista().
 Podés ver su implementación en la ultima parte de este codigo. */
 function mostrarInstrucciones(instrucciones) {
-    //COMPLETAR
+  for (var i = 0; i < instrucciones.length; i++) {
+    mostrarInstruccionEnLista(instrucciones[i],"lista-instrucciones")
+  }
 }
+
 
 /* COMPLETAR: Crear función que agregue la última dirección al arreglo de movimientos
 y utilice actualizarUltimoMovimiento para mostrarlo en pantalla */
+function agregarUltimaDireccion(direccion) {
+  movimientos.push(direccion);
+  actualizarUltimoMovimiento(direccion);
+}
 
 /* Esta función va a chequear si el Rompecabezas esta en la posicion ganadora. 
 Existen diferentes formas de hacer este chequeo a partir de la grilla. */
 function chequearSiGano() {
-    //COMPLETAR
+  if(filaVacia!=2 || columnaVacia!=2){
+    return false;
+  }
+
+  for (var i = 0; i < 3; i++) {
+    for (var j = 0; j < 3; j++) {
+      if(grilla[i][j] !== ganar[i][j]){
+        return false;
+      } 
+    }
+  }
+  victoria=true;
+  boton.style.display = "block";
+  return true;
 }
+
+   
 
 // Implementar alguna forma de mostrar un cartel que avise que ganaste el juego
 function mostrarCartelGanador() {
-    //COMPLETAR
-}
+   //alert("FELICITACIONES!!"+"\n"+"GANASTE!!")
+  swal({
+    type: 'success',
+    title: 'FELICITACIONES!',
+    text: 'Lo lograste.'
+  })
+ }
 
 /* Función que intercambia dos posiciones en la grilla.
 Pensar como intercambiar dos posiciones en un arreglo de arreglos. 
@@ -49,18 +112,27 @@ En vez de intercambiar esos valores vamos a terminar teniendo en ambas posicione
 Se te ocurre cómo solucionar esto con una variable temporal?
 */
 function intercambiarPosicionesGrilla(filaPos1, columnaPos1, filaPos2, columnaPos2) {
-    //COMPLETAR
+  var posOriginal=grilla[filaPos1][columnaPos1];
+  var posNueva= grilla[filaPos2][columnaPos2];
+  grilla[filaPos1][columnaPos1]=posNueva;
+  grilla[filaPos2][columnaPos2]=posOriginal;
+
 }
 
 // Actualiza la posición de la pieza vacía
 function actualizarPosicionVacia(nuevaFila, nuevaColumna) {
-    //COMPLETAR
+  filaVacia=nuevaFila;
+  columnaVacia=nuevaColumna;
 }
 
-
 // Para chequear si la posicón está dentro de la grilla.
+
 function posicionValida(fila, columna) {
-    //COMPLETAR
+  if((fila>=0 && fila<=2) && (columna>=0 && columna<=2)){
+    return true;
+    } else 
+      { return false; 
+        }
 }
 
 /* Movimiento de fichas, en este caso la que se mueve es la blanca intercambiando su posición con otro elemento.
@@ -83,12 +155,14 @@ function moverEnDireccion(direccion) {
     
   // Mueve pieza hacia la derecha, reemplazandola con la blanca
   else if (direccion === codigosDireccion.DERECHA) {
-    //COMPLETAR
+    nuevaFilaPiezaVacia = filaVacia;
+    nuevaColumnaPiezaVacia = columnaVacia - 1;    
   }
     
   // Mueve pieza hacia la izquierda, reemplazandola con la blanca
   else if (direccion === codigosDireccion.IZQUIERDA) {
-    // COMPLETAR
+    nuevaFilaPiezaVacia =filaVacia;
+    nuevaColumnaPiezaVacia = columnaVacia + 1;
   }
 
   /* A continuación se chequea si la nueva posición es válida, si lo es, se intercambia. 
@@ -98,11 +172,29 @@ function moverEnDireccion(direccion) {
     if (posicionValida(nuevaFilaPiezaVacia, nuevaColumnaPiezaVacia)) {
         intercambiarPosiciones(filaVacia, columnaVacia, nuevaFilaPiezaVacia, nuevaColumnaPiezaVacia);
         actualizarPosicionVacia(nuevaFilaPiezaVacia, nuevaColumnaPiezaVacia);
-
-  //COMPLETAR: Agregar la dirección del movimiento al arreglo de movimientos
+        agregarUltimaDireccion(direccion);
 
     }
 }
+
+
+function mostrarOtrosJuegosImg(juegos,href, idDest) {
+  var padre = document.getElementById(idDest);
+  var a = document.createElement("a")
+  var img = document.createElement("img");
+  a.setAttribute("href", href);
+  img.setAttribute("src", juegos);
+  padre.appendChild(a);
+  a.appendChild(img);
+}
+
+function mostrarOtrosJuegos(dict){
+  for (var key in dict) {
+   mostrarOtrosJuegosImg(key, dict[key], "otrosjuegos")
+  }
+}
+
+
 
 
 //////////////////////////////////////////////////////////
@@ -238,9 +330,11 @@ y ejecutando la función para que se capturen las teclas que
 presiona el usuario */
 function iniciar() {
     mostrarInstrucciones(instrucciones);
-    mezclarPiezas(30);
+    mostrarOtrosJuegos(otrosJuegos);
+    mezclarPiezas(20);
     capturarTeclas();
+    victoria=false;
 }
+iniciar();
 
 // Ejecutamos la función iniciar
-iniciar();
