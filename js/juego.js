@@ -12,12 +12,12 @@ var victoria = false;
 //var otrosJuegos= ["images/final.png","images/final0.jpg","images/final000.jpg"]
 
 var otrosJuegos = {
-  "images/final.png":"juego.html" ,
+  "images/final.png":"index.html" ,
   "images/final0.jpg": "juego1.html",
-  "images/finalMyR.jpg": "juego.html",
-  "images/finalMyR2.jpg": "juego.html",
-  "images/finalGUM.jpg": "juego.html",
-  "images/finalSU.jpg": "juego.html",
+  "images/finalMyR.jpg": "index.html",
+  "images/finalMyR2.jpg": "index.html",
+  "images/finalGUM.jpg": "index.html",
+  "images/finalSU.jpg": "index.html",
 }
 
 var juegoActual= document.getElementById('Actual').getAttribute('src');
